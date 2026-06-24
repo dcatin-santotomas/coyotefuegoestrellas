@@ -9,7 +9,7 @@
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
+      <canvas id="unity-canvas" width=960 height=540 tabindex="-1"></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
@@ -103,31 +103,9 @@
 
 
       } else {
-        // Desktop style: make the canvas responsive to its container while
-        // preserving the project's native aspect ratio (1920x1080).
-        const targetWidth = 1920;
-        const targetHeight = 1080;
-        function resizeToContainer() {
-          const container = document.getElementById('unity-container');
-          const cw = container.clientWidth;
-          // If container has no explicit height, derive it from width using aspect ratio
-          const ch = container.clientHeight || Math.floor(cw * (targetHeight / targetWidth));
-          const scale = Math.min(cw / targetWidth, ch / targetHeight) || 1;
-          const cssWidth = Math.max(1, Math.floor(targetWidth * scale));
-          const cssHeight = Math.max(1, Math.floor(targetHeight * scale));
-          canvas.style.width = cssWidth + "px";
-          canvas.style.height = cssHeight + "px";
-          const dpr = window.devicePixelRatio || 1;
-          canvas.width = Math.floor(targetWidth * scale * dpr);
-          canvas.height = Math.floor(targetHeight * scale * dpr);
-        }
-        window.addEventListener('resize', resizeToContainer);
-        if (window.ResizeObserver) {
-          const ro = new ResizeObserver(resizeToContainer);
-          ro.observe(document.getElementById('unity-container'));
-        }
-        // Initial resize
-        resizeToContainer();
+        // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
+        canvas.style.width = "960px";
+        canvas.style.height = "540px";
       }
 
       document.querySelector("#unity-loading-bar").style.display = "block";
